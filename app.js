@@ -3,12 +3,14 @@
 
 function onReady (){
 
-    consop
+    console.log('Object Oriented programing');
 
 }
 
 
 
+
+Window.onload(onReady);
 
 
 
