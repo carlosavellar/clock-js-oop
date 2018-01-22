@@ -1,15 +1,15 @@
 
-.clock{
+#clock{
     font-size: 120px;
     font-family: "Bebas Neue";
     color: lightslategray;
     text-align: center;
 
 }
-.clock2{
+#clock2{
     font-size: 120px;
     font-family: "Bebas Neue";
-    color: #666;
+    color: #B83C09;
     text-align: center;
 
 }
