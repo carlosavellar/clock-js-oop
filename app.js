@@ -3,28 +3,30 @@ function onReady(){
     console.log('Stating clock');
     var clock = new Clock('clock');
     var clock2 = new Clock('clock2');
+
+
+
+
 }
 
 function Clock(id){
-
         this.updateClock = function () {
             var data = new Date;
-
             var clock = document.getElementById(id);
             clock.innerHTML = this.formatDigits(data.getHours()) + ":" + this.formatDigits(data.getMinutes()) +
                 ":" + this.formatDigits(data.getSeconds());
-        }
+        };
         this.formatDigits = function(val){
             if(val < 10){
                 val = '0' + val;
             }
             return val;
-        }
+        };
         // that was created to have acess to the function
         var that = this;
         setInterval(function(){
             that.updateClock();
-            console.log("Teste");
+
             }, 1000);
         that.updateClock();
 
