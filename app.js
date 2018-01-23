@@ -6,27 +6,15 @@ function onReady(){
 }
 
 function Clock(id, offset, label){
-    offset = offset || 0;
+    this.offset = offset || 0;
     var d = new Date();
-    this.offset = (offset + d.getTimezoneOffset())*60*1000;
+    this.offset = (this.offset + d.getTimezoneOffset())*60*1000;
     label = label || '';
     this.label = label;
-
     document.getElementsByName('span').innerHTML = label;
+    this.id = id;
 
-        this.updateClock = function () {
-            var data = new Date();
-                data = new Date(this.offset + data.getTime());
-            var clock = document.getElementById(id);
-            clock.innerHTML = this.formatDigits(data.getHours()) + ":" + this.formatDigits(data.getMinutes()) +
-                ":" + this.formatDigits(data.getSeconds()) + "  " + label;
-        };
-        this.formatDigits = function(val){
-            if(val < 10){
-                val = '0' + val;
-            }
-            return val;
-        };
+
         // that was created to have acess to the function
         var that = this;
         setInterval(function(){
@@ -35,6 +23,19 @@ function Clock(id, offset, label){
             }, 1000);
         that.updateClock();
 }
+Clock.prototype.updateClock = function () {
+    var data = new Date();
+    data = new Date(this.offset + data.getTime());
+    var clock = document.getElementById(this.id);
+    clock.innerHTML = this.formatDigits(data.getHours()) + ":" + this.formatDigits(data.getMinutes()) +
+        ":" + this.formatDigits(data.getSeconds()) + "  " + this.label;
+};
+Clock.prototype.formatDigits = function(val){
+    if(val < 10){
+        val = '0' + val;
+    }
+    return val;
+};
 
 window.onload = onReady();
 
