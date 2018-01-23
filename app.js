@@ -1,20 +1,25 @@
 
 function onReady(){
     console.log('Stating clock');
-    var clock = new Clock('clock');
-    var clock2 = new Clock('clock2');
-
-
-
-
+    var clock = new Clock('clock', 2200, 'Brasil');
+    var clock2 = new Clock('clock2', 1000, 'China');
 }
 
-function Clock(id){
+function Clock(id, offset, label){
+    offset = offset || 0;
+    var d = new Date();
+    this.offset = (offset + d.getTimezoneOffset())*60*1000;
+    label = label || '';
+    this.label = label;
+
+    document.getElementsByName('span').innerHTML = label;
+
         this.updateClock = function () {
-            var data = new Date;
+            var data = new Date();
+                data = new Date(this.offset + data.getTime());
             var clock = document.getElementById(id);
             clock.innerHTML = this.formatDigits(data.getHours()) + ":" + this.formatDigits(data.getMinutes()) +
-                ":" + this.formatDigits(data.getSeconds());
+                ":" + this.formatDigits(data.getSeconds()) + "  " + label;
         };
         this.formatDigits = function(val){
             if(val < 10){
@@ -29,9 +34,7 @@ function Clock(id){
 
             }, 1000);
         that.updateClock();
-
 }
-
 
 window.onload = onReady();
 
