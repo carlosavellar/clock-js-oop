@@ -37,6 +37,7 @@ Clock.prototype.formatDigits = function(val){
     return val;
 };
 
+
 window.onload = onReady();
 
 
