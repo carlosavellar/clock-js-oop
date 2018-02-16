@@ -1,23 +1,34 @@
+function onReady(){
+    var clock = createClock('clock');
+    var clock2 = createClock('clock2');
+}
 
-function ready(){
+function createClock(id){
+    var c = new Object();
+    c.updateClock = function(){
+        var date = new Date();
+        var clock = document.getElementById(id);
+        clock.innerHTML =
+            this.formatDigits(date.getHours()) + ':' +
+            this.formatDigits(date.getMinutes()) + ':' +
+            this.formatDigits(date.getSeconds());
 
-
-
+    };
+    c.formatDigits = function(dig){
+        if (dig < 10){
+            dig = '0' + dig;
+        }
+        return dig;
+    }
+    setInterval(function(){
+        c.updateClock(0);
+    }, 1000);
+    c.updateClock();
+    return c;
 
 }
 
-
-
-window.onload = ready()
-
-
-
-
-
-
-
-
-
+window.onload = onReady();
 
 // function onReady(){
 //     console.log('Stating clock');
@@ -47,11 +58,10 @@ window.onload = ready()
 //             }
 //             return val;
 //         };
-//         // that was created to have acess to the function
+//         // that was created to have acesso to the function
 //         var that = this;
 //         setInterval(function(){
 //             that.updateClock();
-//
 //             }, 1000);
 //         that.updateClock();
 // }
