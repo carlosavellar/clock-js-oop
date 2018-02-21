@@ -3,11 +3,31 @@ function onReady(){
     console.log('Teste');
     var clock = new Clock('clock', 300, 'Brazil');
     var clock2 = new Clock('clock2', -300, 'Brazil');
+
 }
+console.log(clock2.hasOwnProperty('autoClock'));
+
+Date.prototype.updateSeconds = function(){
+    this.getSeconds(this.getSeconds()+1);
+}
+
+Date.prototype.autoClock = function(isAuto){
+    clearInterval(this.clockInterval);
+    if (isAuto){
+        var that = this;
+        this.clockInterval = setInterval(function(){
+            that.updateSeconds();
+
+        }, 1000);
+    }
+}
+
 function Clock(id, offset, label){
     offset = offset || 0;
     var d = new Date();
-    this.offset = (offset + d.getTimezoneOffset()*60*100);
+    var offset = (offset + d.getTimezoneOffset()*60*100);
+    this.d = new Date(offset + d.getTime());
+    this.d.autoClock(true);
     label = label = ' ';
     this.label = label;
     this.id = id;
@@ -18,8 +38,10 @@ function Clock(id, offset, label){
      this.updateClock();
 }
 Clock.prototype.updateClock = function(){
-    var date = new Date();
-    date = new Date(this.offset + date.getTime());
+    var date = this.d;
+        // date.updateSeconds();
+    // var date = new Date();
+    // date = new Date(this.offset + date.getTime());
     var clock = document.getElementById(this.id);
     clock.innerHTML = this.formatDigits(date.getHours()) + ':' + this.formatDigits(date.getMinutes()) + ':' + this.formatDigits(date.getSeconds()) + '\nBrazil';
 };
@@ -30,15 +52,17 @@ Clock.prototype.formatDigits = function(dig){
     return dig;
 };
 window.onload = onReady();
-var d2 = new Date();
-var clockMethods = {
-    d: d2,
-    timezone: console.log(d2.getTimezoneOffset()),
-    gettime: console.log(d2.getTime()),
-
-
-};
-
+// var d2 = new Date();
+// var clockMethods = {
+//     d: d2,
+//     timezone: d2.getTimezoneOffset(),
+//     gettime: d2.getTime(),
+//     digts: d2.getHours() + ':' + d2.getMinutes() + ':' + d2.getSeconds(),
+//     id: document.getElementById('clock3'),
+//     interval: function (){
+//
+//     }
+//  };
 
 
 
