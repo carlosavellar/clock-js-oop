@@ -24,6 +24,7 @@ function Clock(id, offset, label){
              dig = '0' + dig;
          }
          return dig;
+
      };
      var that = this;
      setInterval(function(){
