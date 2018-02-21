@@ -1,34 +1,204 @@
+// 20.02.2018
+
 function onReady(){
-    var clock = createClock('clock');
-    var clock2 = createClock('clock2');
+    console.log('Teste');
+    var clock = new Clock('clock', 300, 'Brazil');
+    var clock2 = new Clock('clock2', -300, 'Brazil');
 }
 
-function createClock(id){
-    var c = new Object();
-    c.updateClock = function(){
+
+function Clock(id, offset, label){
+    offset = offset || 0;
+    var d = new Date();
+    this.offset = new Date(offset + d.getTimezoneOffset()*60*100);
+    label = label = ' ';
+    this.label = label;
+    this.updateClock = function(){
         var date = new Date();
-        var clock = document.getElementById(id);
-        clock.innerHTML =
-            this.formatDigits(date.getHours()) + ':' +
-            this.formatDigits(date.getMinutes()) + ':' +
-            this.formatDigits(date.getSeconds());
-
-    };
-    c.formatDigits = function(dig){
-        if (dig < 10){
-            dig = '0' + dig;
-        }
-        return dig;
-    }
-    setInterval(function(){
-        c.updateClock(0);
-    }, 1000);
-    c.updateClock();
-    return c;
-
+            date = new Date(offset + d.getTimezoneOffset()*60*100 + date.getTime());
+            var clock = document.getElementById(id);
+                clock.innerHTML = this.formatDigits(date.getHours()) +':' + this.formatDigits(date.getMinutes()) +':' + this.formatDigits(date.getSeconds()) + '\nBrazil';
+     };
+     this.formatDigits = function(dig){
+         if(dig < 10){
+             dig = '0' + dig;
+         }
+         return dig;
+     };
+     var that = this;
+     setInterval(function(){
+         that.updateClock();
+     }, 1000);
+     this.updateClock();
 }
+Window.onload = onReady();
 
-window.onload = onReady();
+// 19.02.2018
+
+// function onReady (){
+//     var clock = new Clock('clock', 300, 'Brazil');
+//     var clock2 = new Clock('clock2',-230, 'China');
+// }
+// Date.prototype.upDateSoconds = function(){
+//     this.setSeconds(this.getSeconds()+1);
+// }
+// function Clock(id, offset, label){
+//     this.id = id;
+//     offset = offset || 0;
+//     label = label || ' ';
+//     this.label = label;
+//     var d = new Date();
+//     var offset = (offset + d.getTimezoneOffset())*60*1000;
+//     this.d = new Date(offset + d.getTime());
+//     var that = this;
+//     setInterval(function(){
+//         that.updateClock();
+//     });
+//     this.updateClock();
+// }
+// Clock.prototype.updateClock = function(){
+//     var date = this.d;
+//     date.upDateSoconds();
+//     var clock = document.getElementById(this.id);
+//     clock.innerHTML = this.formatDigits(date.getHours()) + ':' + this.formatDigits(date.getMinutes()) + ':' +  this.formatDigits(date.getSeconds()) + '\n' + this.label;
+// };
+// Clock.prototype.formatDigits = function(dig){
+//     if(dig < 10){
+//         dig = '0' + dig;
+//     };
+//     return dig;
+// };
+
+// window.onload = onReady;
+
+
+// 17.02.2018
+// function onReady(){
+//     var clock = new Clock('clock');
+//     var clock2 = new Clock('clock2');
+//
+//
+// }
+// function Clock(id, offset, label){
+//     offset =  offset || 0;
+//     var d = new Date();
+//     this.offset = (offset + d.getTimezoneOffset())*60*1000;
+//     this.label = label;
+//     label = label || ' ';
+//     this.updateClock = function(){
+//         var date = new Date();
+//             date = new Date((offset + d.getTimezoneOffset())*60*1000 + date.getTime());
+//             var clock = document.getElementById(id);
+//                 clock.innerHTML =
+//                 this.formaDigits(date.getHours()) + ':' +
+//                     this.formaDigits(date.getMinutes()) + ':' +
+//                 this.formaDigits(date.getSeconds()) + '\n' +
+//                     '<div style="color: red;">' + label + '</div>';
+//     };
+//     this.formaDigits = function(dig){
+//         if (dig < 10){
+//             dig = '0' + dig;
+//         }
+//         return dig;
+//     };
+//     var that = this;
+//     setInterval(function(){
+//         that.updateClock();
+//         }, 1000);
+//     this.updateClock();
+// }
+// window.onload = onReady();
+
+// -----------syncronous execution
+
+//
+// function async(){
+//     setInterval(function(){
+//         var x = 0;
+//         while(x < 100000000000){
+//             x += 1;
+//         }
+//
+//     }, 0);
+//     console.log('Done');
+// }
+// console.log(new Date().getTime());
+//
+// async();
+// console.log(new Date().getTime());
+
+
+// var a = 'Hello';
+//
+// function first(){
+//     var b = 'HI';
+//     console.log(a, b);
+//     sencond();
+//     function sencond(){
+//         var c = 'Ola';
+//         console.log(a, b, c);
+//         third();
+//         function third(){
+//             var d = null;
+//
+//             console.log(d, a, b, c);
+//         }
+//     }
+// }
+// first();
+//
+// console.log('___________');
+//
+// function multiply(x, y) {
+//     return x * y;
+// }
+// function printSquare(x) {
+//     var s = multiply(x, x);
+//     console.log(s);
+// }
+// printSquare(5);
+// function foo() {
+//     foo();
+// }
+// foo();
+
+// / 16.02.2018
+// function onReady(){
+//     var clock = new Clock('clock', 400, 'Brasil');
+//     var clock2 = new Clock('clock2', 500, 'Italia');
+// }
+//
+// function Clock(id, offset, label){
+//     offset = offset || 0;
+//     label = label || ' ';
+//     this.label = label;
+//     var d = new Date();
+//     this.offset = (offset + d.getTimezoneOffset())*60*1000;
+//     this.updateClock = function(){
+//         var date = new Date();
+//             date = new Date((offset + d.getTimezoneOffset())*60*1000 + date.getTime());
+//         var clock = document.getElementById(id);
+//         clock.innerHTML =
+//             this.formatDigits(date.getHours()) + ':' +
+//             this.formatDigits(date.getMinutes()) + ':' +
+//             this.formatDigits(date.getSeconds()) + label;
+//     };
+//     this.formatDigits = function(dig){
+//         if (dig < 10){
+//             dig = '0' + dig;
+//         }
+//         return dig;
+//     };
+//     var that = this;
+//     setInterval(function(){
+//         that.updateClock();
+//         console.log('Teste');
+//     }, 1000);
+//     that.updateClock();
+// }
+// window.onload = onReady();
+
+
 
 // function onReady(){
 //     console.log('Stating clock');
