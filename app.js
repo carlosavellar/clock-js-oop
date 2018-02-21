@@ -1,38 +1,46 @@
 // 20.02.2018
-
 function onReady(){
     console.log('Teste');
     var clock = new Clock('clock', 300, 'Brazil');
     var clock2 = new Clock('clock2', -300, 'Brazil');
 }
-
-
 function Clock(id, offset, label){
     offset = offset || 0;
     var d = new Date();
-    this.offset = new Date(offset + d.getTimezoneOffset()*60*100);
+    this.offset = (offset + d.getTimezoneOffset()*60*100);
     label = label = ' ';
     this.label = label;
-    this.updateClock = function(){
-        var date = new Date();
-            date = new Date(offset + d.getTimezoneOffset()*60*100 + date.getTime());
-            var clock = document.getElementById(id);
-                clock.innerHTML = this.formatDigits(date.getHours()) +':' + this.formatDigits(date.getMinutes()) +':' + this.formatDigits(date.getSeconds()) + '\nBrazil';
-     };
-     this.formatDigits = function(dig){
-         if(dig < 10){
-             dig = '0' + dig;
-         }
-         return dig;
-
-     };
+    this.id = id;
      var that = this;
      setInterval(function(){
          that.updateClock();
      }, 1000);
      this.updateClock();
 }
-Window.onload = onReady();
+Clock.prototype.updateClock = function(){
+    var date = new Date();
+    date = new Date(this.offset + date.getTime());
+    var clock = document.getElementById(this.id);
+    clock.innerHTML = this.formatDigits(date.getHours()) + ':' + this.formatDigits(date.getMinutes()) + ':' + this.formatDigits(date.getSeconds()) + '\nBrazil';
+};
+Clock.prototype.formatDigits = function(dig){
+    if(dig < 10){
+        dig = '0' + dig;
+    }
+    return dig;
+};
+window.onload = onReady();
+var d2 = new Date();
+var clockMethods = {
+    d: d2,
+    timezone: console.log(d2.getTimezoneOffset()),
+    gettime: console.log(d2.getTime()),
+
+
+};
+
+
+
 
 // 19.02.2018
 
