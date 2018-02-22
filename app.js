@@ -22,6 +22,7 @@ Date.prototype.autoClock = function(isAuto){
     }
 }
 
+Clock.prototype.prototyversion = '1.0.0';
 function Clock(id, offset, label){
     offset = offset || 0;
     var d = new Date();
@@ -29,6 +30,9 @@ function Clock(id, offset, label){
     this.d = new Date(offset + d.getTime());
     this.d.autoClock(true);
     label = label = ' ';
+
+     console.log(this.prototyversion);
+
     this.label = label;
     this.id = id;
      var that = this;
