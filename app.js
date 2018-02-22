@@ -1,60 +1,92 @@
 // 20.02.2018
-function onReady(){
+function onReady() {
     console.log('Teste');
     var clock = new Clock('clock', 300, 'Brazil');
     var clock2 = new Clock('clock2', -300, 'Brazil');
 
 }
 console.log(clock2.hasOwnProperty('autoClock'));
-
-Date.prototype.updateSeconds = function(){
-    this.getSeconds(this.getSeconds()+1);
+Date.___Interval = 0;
+Date.___aDates = [];
+Date.addtoInterval = function(date) {
+    // console.log(this.___date);
+    this.___aDates.push(date);
+    if (!Date.___Interval) {
+        Date.___Interval = setInterval(function() {
+            Date.updateDates()
+        }, 1000);
+    }
+}
+Date.updateDates = function() {
+    // console.log(this.___aDates.length);
+    for (var i = 0; i < Date.___aDates.length; i++) {
+        // console.log(i);
+        this.___aDates[i].updateSeconds();
+    }
+}
+Date.prototype.updateSeconds = function() {
+    Date.addtoInterval(); // wrong
+    // console.log(this.___date); //right
+    this.setSeconds(this.getSeconds() + 1);
 }
 
-Date.prototype.autoClock = function(isAuto){
+Date.prototype.autoClock = function(isAuto) {
     clearInterval(this.clockInterval);
-    if (isAuto){
-        var that = this;
-        this.clockInterval = setInterval(function(){
-            that.updateSeconds();
+    if (isAuto) {
+        // var that = this;
+        // this.clockInterval = setInterval(function() {
+        //     that.updateSeconds();
 
-        }, 1000);
+        // }, 1000);
+        Date.addtoInterval(this);
     }
 }
 
 Clock.prototype.prototyversion = '1.0.0';
-function Clock(id, offset, label){
+
+function Clock(id, offset, label) {
     offset = offset || 0;
     var d = new Date();
-    var offset = (offset + d.getTimezoneOffset()*60*100);
+    var offset = (offset + d.getTimezoneOffset() * 60 * 100);
     this.d = new Date(offset + d.getTime());
     this.d.autoClock(true);
     label = label = ' ';
 
-     console.log(this.prototyversion);
+    console.log(this.prototyversion);
 
     this.label = label;
     this.id = id;
-     var that = this;
-     setInterval(function(){
-         that.updateClock();
-     }, 1000);
-     this.updateClock();
+    var that = this;
+    setInterval(function() {
+        that.updateClock();
+    }, 1000);
+    this.updateClock();
 }
-Clock.prototype.updateClock = function(){
+Clock.prototype.updateClock = function() {
     var date = this.d;
-        // date.updateSeconds();
+    // date.updateSeconds();
     // var date = new Date();
     // date = new Date(this.offset + date.getTime());
     var clock = document.getElementById(this.id);
     clock.innerHTML = this.formatDigits(date.getHours()) + ':' + this.formatDigits(date.getMinutes()) + ':' + this.formatDigits(date.getSeconds()) + '\nBrazil';
 };
-Clock.prototype.formatDigits = function(dig){
-    if(dig < 10){
+Clock.prototype.formatDigits = function(dig) {
+    if (dig < 10) {
         dig = '0' + dig;
     }
     return dig;
 };
+
+
+
+
+
+
+
+
+
+
+
 window.onload = onReady();
 // var d2 = new Date();
 // var clockMethods = {
