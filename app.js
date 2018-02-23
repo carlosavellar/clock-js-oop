@@ -1,8 +1,8 @@
 // 20.02.2018
 function onReady() {
     console.log('Teste');
-    var clock = new Clock('clock', 300, 'Brazil');
-    var clock2 = new Clock('clock2', -300, 'Brazil');
+    var clock = new com.crGeek.Clock("clock", 300, "Brazil");
+    var clock2 = new com.crGeek.Clock("clock2", -300, "Brazil");
 
 }
 console.log(clock2.hasOwnProperty('autoClock'));
@@ -42,9 +42,10 @@ Date.prototype.autoClock = function(isAuto) {
     }
 }
 
-Clock.prototype.prototyversion = '1.0.0';
+var com = com || {};
+com.crGeek = com.crGeek || {};
 
-function Clock(id, offset, label) {
+com.crGeek.Clock = function(id, offset, label) {
     offset = offset || 0;
     var d = new Date();
     var offset = (offset + d.getTimezoneOffset() * 60 * 100);
@@ -62,17 +63,23 @@ function Clock(id, offset, label) {
     }, 1000);
     this.updateClock();
 }
-Clock.prototype.updateClock = function() {
+com.crGeek.Clock.prototype.updateClock = function() {
     var date = this.d;
     // date.updateSeconds();
     // var date = new Date();
     // date = new Date(this.offset + date.getTime());
     var clock = document.getElementById(this.id);
-    clock.innerHTML = this.formatDigits(date.getHours()) + ':' + this.formatDigits(date.getMinutes()) + ':' + this.formatDigits(date.getSeconds()) + '\nBrazil';
+    clock.innerHTML =
+        this.formatDigits(date.getHours()) +
+        ":" +
+        this.formatDigits(date.getMinutes()) +
+        ":" +
+        this.formatDigits(date.getSeconds()) +
+        "\nBrazil";
 };
-Clock.prototype.formatDigits = function(dig) {
+com.crGeek.Clock.prototype.formatDigits = function(dig) {
     if (dig < 10) {
-        dig = '0' + dig;
+        dig = "0" + dig;
     }
     return dig;
 };
