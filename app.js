@@ -3,7 +3,14 @@ function onReady() {
     console.log('Teste');
     var clock = new com.crGeek.Clock("clock", 300, "Brazil");
     var clock2 = new com.crGeek.Clock("clock2", -300, "Brazil");
-
+    var clock3 = new com.crGeek.TextClock("clock3");
+    // var clock4 = new com.crGeek.AlarmClock("clock4", -300, "Brazil");
+    
+    Liveupdate(1,2,3 + "/n");
+     Liveupdate.call(clock, 2, 3 + "/n");
+}
+function Liveupdate(a,b,c){
+    console.log(this, a, b, c);
 }
 console.log(clock2.hasOwnProperty('autoClock'));
 Date.___Interval = 0;
@@ -19,13 +26,13 @@ Date.addtoInterval = function(date) {
 }
 Date.updateDates = function() {
     // console.log(this.___aDates.length);
-    for (var i = 0; i < Date.___aDates.length; i++) {
+    for (var i = 0; i < this.___aDates.length; i++) {
         // console.log(i);
         this.___aDates[i].updateSeconds();
     }
 }
 Date.prototype.updateSeconds = function() {
-    Date.addtoInterval(); // wrong
+    // Date.addtoInterval(); // wrong
     // console.log(this.___date); //right
     this.setSeconds(this.getSeconds() + 1);
 }
@@ -69,30 +76,32 @@ com.crGeek.Clock.prototype.updateClock = function() {
     // var date = new Date();
     // date = new Date(this.offset + date.getTime());
     var clock = document.getElementById(this.id);
-    clock.innerHTML =
-        this.formatDigits(date.getHours()) +
-        ":" +
-        this.formatDigits(date.getMinutes()) +
-        ":" +
-        this.formatDigits(date.getSeconds()) +
-        "\nBrazil";
+    clock.innerHTML = this.formatOutput(date.getHours(), date.getMinutes(), date.getSeconds(), this.label);
 };
+com.crGeek.Clock.prototype.formatOutput = function(h,m,s, label){
+    return  this.formatDigits(h) + ":" + this.formatDigits(m) + ":" + this.formatDigits(s) + label;
+};
+
+// textClock
+com.crGeek.TextClock = function(id, offset, label) {
+  com.crGeek.Clock.apply(this, arguments);
+  console.log('version: ' + this.version);
+};
+
+com.crGeek.AlarmClock = function(id, offset, label, alarmH, alarmM) {
+  com.crGeek.Clock.apply(this, arguments);
+  console.log("version: " + this.version);
+};
+
+com.crGeek.TextClock.prototype = Object.create(com.crGeek.Clock.prototype);
+com.crGeek.TextClock.prototype.constructor = com.crGeek.textClock;
+
 com.crGeek.Clock.prototype.formatDigits = function(dig) {
     if (dig < 10) {
         dig = "0" + dig;
     }
     return dig;
 };
-
-
-
-
-
-
-
-
-
-
 
 window.onload = onReady();
 // var d2 = new Date();
